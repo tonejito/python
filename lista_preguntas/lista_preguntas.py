@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # = ^ . ^ =
-# 
+#
 # Andrés Hernández (tonejito)
-# 
+#
 # This software is licensed under the terms of the BSD-2-Clause license
-# 
+#
 # https://opensource.org/licenses/BSD-2-Clause
 
 """
@@ -100,7 +100,7 @@ if __name__ == "__main__":
     # Número de página de la pregunta inicial
     INICIO = args.ignora + 1
     # Número de página de la pregunta final
-    FIN = INICIO + PREGUNTAS
+    FIN = INICIO + args.preguntas
 
     # Genera la lista de preguntas desde un rango
     lista = list(range(INICIO, FIN))
@@ -112,7 +112,11 @@ if __name__ == "__main__":
         print("", file=sys.stderr)
 
     # Divide la lista en segmentos de tamaño fijo
-    final = list(separa_lista(lista, TAMAÑO))
+    lista_separada = list(separa_lista(lista, args.tamaño))
 
-    # Imprime el resultado
-    print(json.dumps(final, indent=2))
+    # Da formato e imprime el resultado
+    lista_json = json.dumps(lista_separada)
+    lista_json = lista_json.replace("[[", "[\n  [")
+    lista_json = lista_json.replace("], [", "],\n  [")
+    lista_json = lista_json.replace("]]", "]\n]")
+    print(lista_json)
